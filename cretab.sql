@@ -1,6 +1,16 @@
--- Légendes
-
--- Ensure name are not used
+--********************************************************************************************
+--                                  Légendes
+--********************************************************************************************
+--                              Convention de nom
+-- NomDeTable
+-- attributDUneTable
+--
+--********************************************************************************************
+--                                  Acronymes
+--  PK_: Primary key / Clef primaire
+--  FK_: Foreign Key / Clef Étrangère
+--********************************************************************************************
+-- Ensure name are not already used
 DROP TABLE Personne;
 DROP TABLE Enseignant;
 DROP TABLE Etudiant;
@@ -11,13 +21,14 @@ DROP TABLE Status;
 DROP TABLE DonneesPrefessionel;
 DROP TABLE Local;
 DROP TABLE PlageHoraire;
+DROP TABLE Cours;
+DROP TABLE Prealable;
 --table: Personne
 CREATE TABLE Personne(
     --Attributes
     numTelephone varchar(30) NOT NULL ,
     Nom varchar(255) NOT NULL ,
     Prenom varchar(255) NOT NULL ,
-    numAdressSocial varchar(255) NOT NULL ,
     numAdressSocial varchar(255) NOT NULL ,
     DateDeNaisssance date NOT NULL,
     --Constraint
@@ -84,7 +95,24 @@ CREATE TABLE Local(
 
 CREATE TABLE PlageHoraire(
     typeDeCours ,--todo domain
-
+    jourEtHeure
 );
+
+CREATE TABLE Cours(
+    sigleDuCours VARCHAR(255),
+    titreCours VARCHAR(255),
+    enseignantResponsable Personne,
+    nombreCredit INTEGER,
+    heureTotalCours INTEGER,
+    heureLab INTEGER,
+    heurePerso INTEGER,
+    sessionDuCours DOMAIN
+);
+
+CREATE TABLE Prealable(
+    coursPrincipal, --todo fk
+    coursPrealable --todo fk
+);
+
 
 --Foreign keys
