@@ -32,7 +32,6 @@ CREATE TABLE Personne(
     numAdressSocial     varchar(255)    NOT NULL ,
     DateDeNaisssance    date            NOT NULL,
     --PRIMARY KEY
-    CONSTRAINT PK_persone PRIMARY KEY (numTelephone)
 );
 
 --table: Etudiant
@@ -43,11 +42,12 @@ CREATE TABLE Etudiant(
     AdresseCivique      VARCHAR(255),
     Courriel            VARCHAR(255),
     CourrielUqac        VARCHAR(255),
-    Statut              CHAR
+    etat                CHAR,
         --le statut de l’étudiant (le statut correspond à un caractère parmi les suivants : C pour études en cours, A pour
         --abandon du programme, T pour études terminées avec succès, S pour suspendu et P pour pause temporaire
         --autorisée)
     --constraint
+    CONSTRAINT CHECK ( etat IN ('C','A','T','P') )
 );
 
 
@@ -55,7 +55,8 @@ CREATE TABLE Enseignant(
     numTelephone VARCHAR(255),
     dateEmbauche DATE,
     AdresseCivique VARCHAR(255),
-    Statut DOMAIN --TODO domain
+    statut CHAR,
+    CONSTRAINT CHECK ( statut IN('C','A','T','P'))
 );
 
 CREATE TABLE Departement(
@@ -75,30 +76,35 @@ CREATE TABLE DonneesPrefessionel(
 CREATE TABLE Session(
     iDSession INTEGER,
     annee INTEGER,
-    saison,  -- todo domain
+    saison VARCHAR(7),
+    CONSTRAINT CHECK ( saison IN ('Hiver','Été','Automne'))
 );
 
 CREATE TABLE Groupe(
   idGroupe INTEGER,
-  numGroupe VARCHAR,
-  etat, -- todo domain
+  numGroupe VARCHAR(15),
+  etat VARCHAR(8),
+  CONSTRAINT CHECK (etat IN ('Annulé', 'En Cours', 'Terminé'))
 );
 
 CREATE TABLE Status(
     cote, -- todo domain
     --todo foreign key
+    CONSTRAINT CHECK ( cote IN ('A','B','C','D','E','S','I','X','Y','Z') )
 );
 
 CREATE TABLE Local(
     iDLocal INTEGER,
     numero INTEGER,
-    aile , --todo domain
-    etage INTEGER
+    aile CHAR(1),
+    etage INTEGER,
+    CONSTRAINT CHECK (aile IN ('D','V','P','K','G','A','H','S','F','M','B','T','R','U'))
 );
 
 CREATE TABLE PlageHoraire(
-    typeDeCours ,--todo domain
-    jourEtHeure
+    typeDeCours VARCHAR(16),
+    jourEtHeure DATE,
+    CONSTRAINT CHECK ( typeDeCours IN ('Laboratoire','Travaux Dirigés','Cours') )
 );
 
 CREATE TABLE Cours(
