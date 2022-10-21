@@ -88,7 +88,7 @@ CREATE TABLE Groupe(
 );
 
 CREATE TABLE Status(
-    cote, -- todo domain
+    cote CHAR(1),
     --todo foreign key
     CONSTRAINT CHECK ( cote IN ('A','B','C','D','E','S','I','X','Y','Z') )
 );
@@ -110,12 +110,14 @@ CREATE TABLE PlageHoraire(
 CREATE TABLE Cours(
     sigleDuCours VARCHAR(255),
     titreCours VARCHAR(255),
-    enseignantResponsable Personne,
+    enseignantResponsable Personne, -- todo FK
     nombreCredit INTEGER,
     heureTotalCours INTEGER,
     heureLab INTEGER,
     heurePerso INTEGER,
-    sessionDuCours DOMAIN
+    sessionDuCours VARCHAR(8),
+    CONSTRAINT CHECK ( sessionDuCours IN ('Hiver','Été','Automne'))
+
 );
 
 CREATE TABLE Prealable(
