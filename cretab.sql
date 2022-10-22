@@ -66,16 +66,19 @@ CREATE TABLE Enseignant(
     dateEmbauche        DATE,
     AdresseCivique      VARCHAR(255),
     statut              CHAR,
-    --CONSTRAINT
-    CONSTRAINT CHECK ( statut IN('C','A','T','P')),
     --FOREIGN KEY
     CONSTRAINT FK_Enseignant_Personne
                      FOREIGN KEY (numTelephone)
                      REFERENCES Personne(numTelephone)
 );
 
+ALTER TABLE Enseignant
+    ADD     CONSTRAINT etat_of_Etudiant_in_domain_check CHECK ( statut IN ('C','A','T','P') );
+
+
+
 CREATE TABLE Departement(
-    iDdepartement               INTEGER UNIQUE, -- todo autoincrement
+    iDdepartement               INTEGER , -- todo autoincrement
     nom                         VARCHAR(255),
     numDepartement              INTEGER,
     numTelDuDirecteur           VARCHAR(255),
@@ -86,6 +89,17 @@ CREATE TABLE Departement(
                         FOREIGN KEY (numTelDuDirecteur)
                         REFERENCES Enseignant(numTelephone)
 );
+-- Auto increment of Departement for idDepartement
+CREATE SEQUENCE departement_sequence START WITH 1;
+CREATE OR REPLACE TRIGGER Departement_trigger_autoincrement
+    BEFORE INSERT ON Departement
+    FOR EACH ROW
+    BEGIN
+        SELECT departement_sequence.nextval
+        INTO :new.iDdepartement
+        FROMdual;
+        END;
+
 
 CREATE TABLE DonneesPrefessionel(
     numTelephone VARCHAR(255), --todo foreign key
