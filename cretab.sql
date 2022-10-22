@@ -1,4 +1,7 @@
 --********************************************************************************************
+-- Simon Duchesne
+-- 24 Oct. 2022
+--********************************************************************************************
 --                                  Légendes
 --********************************************************************************************
 --                              Convention de nom
@@ -26,18 +29,19 @@ DROP TABLE Prealable;
 --table: Personne
 CREATE TABLE Personne(
     --Attributes
-    numTelephone        varchar(30)     NOT NULL ,
+    numTelephone        varchar(30)     NOT NULL UNIQUE,
     Nom                 varchar(255)    NOT NULL ,
     Prenom              varchar(255)    NOT NULL ,
     numAdressSocial     varchar(255)    NOT NULL ,
-    DateDeNaisssance    date            NOT NULL,
-    --PRIMARY KEY
+    DateDeNaisssance    date            NOT NULL ,
+    --PRIMARY KEY -- todo primary key
+    CONSTRAINT PK_numTelephone PRIMARY KEY (numTelephone)
 );
 
 --table: Etudiant
 CREATE TABLE Etudiant(
     --Attributes
-    numTelephone        VARCHAR(30),
+    numTelephone        VARCHAR(30) NOT NULL UNIQUE,
     CodePermanent       VARCHAR(255),
     AdresseCivique      VARCHAR(255),
     Courriel            VARCHAR(255),
@@ -47,16 +51,22 @@ CREATE TABLE Etudiant(
         --abandon du programme, T pour études terminées avec succès, S pour suspendu et P pour pause temporaire
         --autorisée)
     --constraint
-    CONSTRAINT CHECK ( etat IN ('C','A','T','P') )
+    CONSTRAINT CHECK ( etat IN ('C','A','T','P') ),
+    --Foreign Key
+    CONSTRAINT FK_Etudiant_Personne
+                     FOREIGN KEY (numTelephone)
+                     REFERENCES Personne(numTelephone)
 );
 
 
 CREATE TABLE Enseignant(
-    numTelephone VARCHAR(255),
-    dateEmbauche DATE,
-    AdresseCivique VARCHAR(255),
-    statut CHAR,
-    CONSTRAINT CHECK ( statut IN('C','A','T','P'))
+    numTelephone        VARCHAR(255)    UNIQUE,
+    dateEmbauche        DATE,
+    AdresseCivique      VARCHAR(255),
+    statut              CHAR,
+    CONSTRAINT CHECK ( statut IN('C','A','T','P')) -- todo FK
+    --todo PK
+
 );
 
 CREATE TABLE Departement(
@@ -117,13 +127,12 @@ CREATE TABLE Cours(
     heurePerso INTEGER,
     sessionDuCours VARCHAR(8),
     CONSTRAINT CHECK ( sessionDuCours IN ('Hiver','Été','Automne'))
-
+    --todo FK
 );
 
 CREATE TABLE Prealable(
     coursPrincipal, --todo fk
     coursPrealable --todo fk
 );
-
-
 --Foreign keys
+
