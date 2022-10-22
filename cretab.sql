@@ -26,22 +26,22 @@ DROP TABLE Local;
 DROP TABLE PlageHoraire;
 DROP TABLE Cours;
 DROP TABLE Prealable;
---table: Personne
+
+
 CREATE TABLE Personne(
     --Attributes
-    numTelephone        varchar(30)     NOT NULL UNIQUE,
+    numTelephone        varchar(30)     NOT NULL ,
     Nom                 varchar(255)    NOT NULL ,
     Prenom              varchar(255)    NOT NULL ,
     numAdressSocial     varchar(255)    NOT NULL ,
     DateDeNaisssance    date            NOT NULL ,
-    --PRIMARY KEY -- todo primary key
-    CONSTRAINT PK_numTelephone PRIMARY KEY (numTelephone)
+    --PRIMARY KEY
+   CONSTRAINT PK_numTelephone PRIMARY KEY (numTelephone)
 );
 
---table: Etudiant
 CREATE TABLE Etudiant(
-    --Attributes
-    numTelephone        VARCHAR(30) NOT NULL UNIQUE,
+    --Attributs
+    numTelephone        VARCHAR(30) NOT NULL,
     CodePermanent       VARCHAR(255),
     AdresseCivique      VARCHAR(255),
     Courriel            VARCHAR(255),
@@ -51,29 +51,40 @@ CREATE TABLE Etudiant(
         --abandon du programme, T pour études terminées avec succès, S pour suspendu et P pour pause temporaire
         --autorisée)
     --constraint
-    CONSTRAINT CHECK ( etat IN ('C','A','T','P') ),
-    --Foreign Key
     CONSTRAINT FK_Etudiant_Personne
                      FOREIGN KEY (numTelephone)
                      REFERENCES Personne(numTelephone)
 );
+ALTER TABLE Etudiant
+    ADD     CONSTRAINT etat_in_domain_check CHECK ( etat IN ('C','A','T','P') );
+
 
 
 CREATE TABLE Enseignant(
+    --Attributs
     numTelephone        VARCHAR(255)    UNIQUE,
     dateEmbauche        DATE,
     AdresseCivique      VARCHAR(255),
     statut              CHAR,
-    CONSTRAINT CHECK ( statut IN('C','A','T','P')) -- todo FK
-    --todo PK
-
+    --CONSTRAINT
+    CONSTRAINT CHECK ( statut IN('C','A','T','P')),
+    --FOREIGN KEY
+    CONSTRAINT FK_Enseignant_Personne
+                     FOREIGN KEY (numTelephone)
+                     REFERENCES Personne(numTelephone)
 );
 
 CREATE TABLE Departement(
-    iDdepartement INTEGER,
-    nom VARCHAR(255),
-    numDepartement INTEGER,
-    directeur -- todo liaison vers un enseignant
+    iDdepartement               INTEGER UNIQUE, -- todo autoincrement
+    nom                         VARCHAR(255),
+    numDepartement              INTEGER,
+    numTelDuDirecteur           VARCHAR(255),
+    -- Primary key
+    CONSTRAINT PK_Departement PRIMARY KEY (iDdepartement),
+    -- Foreign key
+    CONSTRAINT FK_Departement_Enseignant
+                        FOREIGN KEY (numTelDuDirecteur)
+                        REFERENCES Enseignant(numTelephone)
 );
 
 CREATE TABLE DonneesPrefessionel(
@@ -81,6 +92,7 @@ CREATE TABLE DonneesPrefessionel(
     telephoneProfessionel INTEGER,
     localBureau INTEGER,
     courriel VARCHAR(255)
+
 );
 
 CREATE TABLE Session(
