@@ -154,6 +154,7 @@ CREATE TABLE Cours(
     sessionDuCours VARCHAR(8),
     CONSTRAINT CHECK ( sessionDuCours IN ('Hiver','Été','Automne'))
     --todo FK
+    --todo pk
 );
 
 CREATE TABLE Prealable(
