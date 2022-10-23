@@ -213,9 +213,16 @@ ALTER TABLE PlageHoraire
 --                      Table de relation d'un Cours à Cours, (1 1..n)
 -----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Prealable(
-    coursPrincipal, --todo fk
-    coursPrealable --todo fk
+    coursPrincipal  VARCHAR(255),
+    coursPrealable  VARCHAR(255)
 );
+ALTER TABLE Prealable ADD CONSTRAINT PK_Prealable PRIMARY KEY (coursPrealable, coursPrincipal);
+Alter TABLE Prealable ADD CONSTRAINT FK_Prealable_Cours_coursprincipale
+    FOREIGN KEY (coursPrincipal)
+    REFERENCES Cours(sigleDuCours);
+Alter TABLE Prealable ADD CONSTRAINT FK_Prealable_Cours_coursPrealable
+    FOREIGN KEY (coursPrealable)
+    REFERENCES Cours(sigleDuCours);
 --todo Foreign keys
 --todo prim key
 
