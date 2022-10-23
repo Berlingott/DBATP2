@@ -14,6 +14,8 @@
 --  FK_: Foreign Key / Clef Étrangère
 --********************************************************************************************
 -- Ensure name are not already used
+
+ALTER SESSION SET CURRENT_SCHEMA="SIMONDUCHESNE1";
 DROP TABLE Personne;
 DROP TABLE Enseignant;
 DROP TABLE Etudiant;
@@ -27,7 +29,9 @@ DROP TABLE PlageHoraire;
 DROP TABLE Cours;
 DROP TABLE Prealable;
 
-
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table Personne
+-----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Personne(
     --Attributes
     numTelephone        varchar(30)     NOT NULL ,
@@ -38,7 +42,9 @@ CREATE TABLE Personne(
     --PRIMARY KEY
    CONSTRAINT PK_numTelephone PRIMARY KEY (numTelephone)
 );
-
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table Etudiant
+-----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Etudiant(
     --Attributs
     numTelephone        VARCHAR(30) NOT NULL,
@@ -59,7 +65,9 @@ ALTER TABLE Etudiant
     ADD     CONSTRAINT etat_in_domain_check CHECK ( etat IN ('C','A','T','P') );
 
 
-
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table Enseignant
+-----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Enseignant(
     --Attributs
     numTelephone        VARCHAR(255)    UNIQUE,
@@ -71,19 +79,20 @@ CREATE TABLE Enseignant(
                      FOREIGN KEY (numTelephone)
                      REFERENCES Personne(numTelephone)
 );
-
 ALTER TABLE Enseignant
     ADD     CONSTRAINT etat_of_Etudiant_in_domain_check CHECK ( statut IN ('C','A','T','P') );
 
-
-
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table Departement
+-----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Departement(
-    iDdepartement               INTEGER , -- todo autoincrement
+    iDdepartement               INTEGER ,
     nom                         VARCHAR(255),
     numDepartement              INTEGER,
     numTelDuDirecteur           VARCHAR(255),
     -- Primary key
-    CONSTRAINT PK_Departement PRIMARY KEY (iDdepartement),
+    CONSTRAINT PK_Departement
+        PRIMARY KEY (iDdepartement),
     -- Foreign key
     CONSTRAINT FK_Departement_Enseignant
                         FOREIGN KEY (numTelDuDirecteur)
@@ -99,36 +108,50 @@ CREATE OR REPLACE TRIGGER Departement_trigger_autoincrement
         INTO :new.iDdepartement
         FROMdual;
         END;
-
-
-CREATE TABLE DonneesPrefessionel(
-    numTelephone VARCHAR(255), --todo foreign key
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table DonneesProfessionel
+-----------------------------------------------------------------------------------------------------------------------
+CREATE TABLE DonneesProfessionel(
+    numTelephone VARCHAR(255),
     telephoneProfessionel INTEGER,
     localBureau INTEGER,
-    courriel VARCHAR(255)
-
+    courriel VARCHAR(255),
+    CONSTRAINT FK_DonneesProfessionel_Enseignant
+                                FOREIGN KEY (numTelephone)
+                                REFERENCES Enseignant(numTelephone)
 );
-
-CREATE TABLE Session(
-    iDSession INTEGER,
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table DonneesProfessionel
+--                      Ne peut pas être Session, Session est un mot réservé.
+-----------------------------------------------------------------------------------------------------------------------
+CREATE TABLE SessionEcole(
+    iDSession INTEGER, -- todo PK
     annee INTEGER,
     saison VARCHAR(7),
-    CONSTRAINT CHECK ( saison IN ('Hiver','Été','Automne'))
+    CONSTRAINT CHECK ( saison IN ('Hiver','Été','Automne')),
+    CONSTRAINT PK_SessionEcole
+        PRIMARY KEY (iDSession)
 );
-
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table Groupe
+-----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Groupe(
   idGroupe INTEGER,
   numGroupe VARCHAR(15),
   etat VARCHAR(8),
   CONSTRAINT CHECK (etat IN ('Annulé', 'En Cours', 'Terminé'))
 );
-
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table Status
+-----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Status(
     cote CHAR(1),
     --todo foreign key
     CONSTRAINT CHECK ( cote IN ('A','B','C','D','E','S','I','X','Y','Z') )
 );
-
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table Local
+-----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Local(
     iDLocal INTEGER,
     numero INTEGER,
@@ -136,13 +159,17 @@ CREATE TABLE Local(
     etage INTEGER,
     CONSTRAINT CHECK (aile IN ('D','V','P','K','G','A','H','S','F','M','B','T','R','U'))
 );
-
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table PlageHoraire
+-----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE PlageHoraire(
     typeDeCours VARCHAR(16),
     jourEtHeure DATE,
     CONSTRAINT CHECK ( typeDeCours IN ('Laboratoire','Travaux Dirigés','Cours') )
 );
-
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table Cours
+-----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Cours(
     sigleDuCours VARCHAR(255),
     titreCours VARCHAR(255),
@@ -156,10 +183,14 @@ CREATE TABLE Cours(
     --todo FK
     --todo pk
 );
-
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table Prealable
+--                      Table de relation d'un Cours à Cours, (1 1..n)
+-----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Prealable(
     coursPrincipal, --todo fk
     coursPrealable --todo fk
 );
---Foreign keys
+--todo Foreign keys
+--todo prim key
 
