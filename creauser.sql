@@ -1,3 +1,9 @@
+--********************************************************************************************
+-- Simon Duchesne
+-- 24 Oct. 2022
+-- Fichier de creation d'un utilisateur.
+--********************************************************************************************
+
 alter session set "_oracle_script"=true;
 CREATE USER simonduchesne1 IDENTIFIED BY uqac1234;
 GRANT SYSOPER TO simonduchesne1;
