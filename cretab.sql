@@ -177,33 +177,37 @@ CREATE TABLE Local(
     aile CHAR(1),
     etage INTEGER
 );
-ALTER TABLE Local ADD CONSTRAINT FK_lodal PRIMARY KEY (numero,aile,etage);
+ALTER TABLE Local ADD CONSTRAINT PK_lodal PRIMARY KEY (numero,aile,etage);
 AlTER TABLE Local ADD CONSTRAINT Local_aile_check CHECK (aile IN ('D','V','P','K','G','A','H','S','F','M','B','T','R','U'));
-
------------------------------------------------------------------------------------------------------------------------
---                                      Table PlageHoraire
------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE PlageHoraire(
-    typeDeCours VARCHAR(16),
-    jourEtHeure DATE,
-    CONSTRAINT CHECK ( typeDeCours IN ('Laboratoire','Travaux Dirigés','Cours') )
-);
 -----------------------------------------------------------------------------------------------------------------------
 --                                      Table Cours
 -----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Cours(
-    sigleDuCours VARCHAR(255),
-    titreCours VARCHAR(255),
-    enseignantResponsable Personne, -- todo FK
-    nombreCredit INTEGER,
-    heureTotalCours INTEGER,
-    heureLab INTEGER,
-    heurePerso INTEGER,
-    sessionDuCours VARCHAR(8),
-    CONSTRAINT CHECK ( sessionDuCours IN ('Hiver','Été','Automne'))
-    --todo FK
-    --todo pk
+    sigleDuCours                VARCHAR(255),
+    titreCours                  VARCHAR(255),
+    enseignantResponsable       VARCHAR(30),
+    nombreCredit                INTEGER,
+    heureTotalCours             INTEGER,
+    heureLab                    INTEGER,
+    heurePerso                  INTEGER,
+    sessionDuCours              VARCHAR(8)
 );
+ALTER TABLE Cours ADD CONSTRAINT PK_Cours PRIMARY KEY (sigleDuCours);
+ALTER TABLE Cours ADD CONSTRAINT FK_Cours_Enseignant_EnseignantResponsable
+    FOREIGN KEY (enseignantResponsable)
+    REFERENCES Enseignant(numTelephone);
+ALTER TABLE Cours ADD CONSTRAINT Cours_sessionDuCours_CHECK CHECK ( sessionDuCours IN ('Hiver','Été','Automne'));
+-----------------------------------------------------------------------------------------------------------------------
+--                                      Table PlageHoraire
+-----------------------------------------------------------------------------------------------------------------------
+CREATE TABLE PlageHoraire( --todo add keys
+    typeDeCours VARCHAR(16),
+    jourEtHeure DATE,
+    idGroupe INTEGER,
+);
+ALTER TABLE PlageHoraire
+    ADD CONSTRAINT PlageHoraire_typeDeCours_check
+    CHECK (typeDeCours IN ('Laboratoire','Travaux Dirigés','Cours'));
 -----------------------------------------------------------------------------------------------------------------------
 --                                      Table Prealable
 --                      Table de relation d'un Cours à Cours, (1 1..n)
