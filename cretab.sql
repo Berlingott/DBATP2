@@ -63,6 +63,7 @@ CREATE TABLE Etudiant(
 );
 ALTER TABLE Etudiant
     ADD     CONSTRAINT etat_in_domain_check CHECK ( etat IN ('C','A','T','P') );
+ALTER TABLE Etudiant ADD PRIMARY KEY (numTelephone);
 
 
 -----------------------------------------------------------------------------------------------------------------------
@@ -70,7 +71,7 @@ ALTER TABLE Etudiant
 -----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Enseignant(
     --Attributs
-    numTelephone        VARCHAR(255)    UNIQUE,
+    numTelephone        VARCHAR(255),
     dateEmbauche        DATE,
     AdresseCivique      VARCHAR(255),
     statut              CHAR,
@@ -81,7 +82,7 @@ CREATE TABLE Enseignant(
 );
 ALTER TABLE Enseignant
     ADD     CONSTRAINT etat_of_Etudiant_in_domain_check CHECK ( statut IN ('C','A','T','P') );
-
+ALTER TABLE Enseignant ADD PRIMARY KEY (numTelephone);
 -----------------------------------------------------------------------------------------------------------------------
 --                                      Table Departement
 -----------------------------------------------------------------------------------------------------------------------
@@ -153,22 +154,32 @@ CREATE OR REPLACE TRIGGER Groupe_idGroupe_sequence
         END;
 -----------------------------------------------------------------------------------------------------------------------
 --                                      Table Status
+--                      Table de relation (0..n-0..n) De étudiant à Groupe.
+-- Primary key: (idGrouepe.Groupe, numTelephone.Etudiant)
 -----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Status(
     cote CHAR(1),
-    --todo foreign key
-    CONSTRAINT CHECK ( cote IN ('A','B','C','D','E','S','I','X','Y','Z') )
+    idGroupe INTEGER, -- reference idGtoupe.groupe
+    numTelephone VARCHAR(30) --Reference numTelephone.Etudiant
 );
+ALTER TABLE Status ADD CHECK (cote IN ('A','B','C','D','E','S','I','X','Y','Z') );
+ALTER TABLE Status ADD FOREIGN KEY (idGroupe)
+                     REFERENCES Groupe(idGroupe);
+ALTER TABLE Status ADD FOREIGN KEY (numTelephone)
+                    REFERENCES Etudiant(numTelephone);
+ALTER TABLE Status ADD PRIMARY KEY (idGroupe, numTelephone);
 -----------------------------------------------------------------------------------------------------------------------
 --                                      Table Local
+-- Primary key (numero.Local,aile.Local,etage.Local)
 -----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Local(
-    iDLocal INTEGER,
     numero INTEGER,
     aile CHAR(1),
-    etage INTEGER,
-    CONSTRAINT CHECK (aile IN ('D','V','P','K','G','A','H','S','F','M','B','T','R','U'))
+    etage INTEGER
 );
+ALTER TABLE Local ADD CONSTRAINT FK_lodal PRIMARY KEY (numero,aile,etage);
+AlTER TABLE Local ADD CONSTRAINT Local_aile_check CHECK (aile IN ('D','V','P','K','G','A','H','S','F','M','B','T','R','U'));
+
 -----------------------------------------------------------------------------------------------------------------------
 --                                      Table PlageHoraire
 -----------------------------------------------------------------------------------------------------------------------
