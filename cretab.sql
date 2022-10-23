@@ -20,10 +20,10 @@ DROP TABLE Personne;
 DROP TABLE Enseignant;
 DROP TABLE Etudiant;
 DROP TABLE Departement;
-DROP TABLE Session;
+DROP TABLE SessionEcole;
 DROP TABLE Groupe;
 DROP TABLE Status;
-DROP TABLE DonneesPrefessionel;
+DROP TABLE DonneesProfessionel;
 DROP TABLE Local;
 DROP TABLE PlageHoraire;
 DROP TABLE Cours;
@@ -125,22 +125,32 @@ CREATE TABLE DonneesProfessionel(
 --                      Ne peut pas être Session, Session est un mot réservé.
 -----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE SessionEcole(
-    iDSession INTEGER, -- todo PK
     annee INTEGER,
     saison VARCHAR(7),
     CONSTRAINT CHECK ( saison IN ('Hiver','Été','Automne')),
     CONSTRAINT PK_SessionEcole
-        PRIMARY KEY (iDSession)
+        PRIMARY KEY (Annee,saison)
 );
 -----------------------------------------------------------------------------------------------------------------------
 --                                      Table Groupe
+-- Primary key: (idGroupe)
 -----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Groupe(
   idGroupe INTEGER,
   numGroupe VARCHAR(15),
-  etat VARCHAR(8),
-  CONSTRAINT CHECK (etat IN ('Annulé', 'En Cours', 'Terminé'))
+  etat VARCHAR(8)
 );
+ALTER TABLE Groupe ADD PRIMARY KEY (idGroupe);
+Alter TABLE Groupe ADD CHECK (etat IN ('Annulé', 'En Cours', 'Terminé'));
+CREATE SEQUENCE Groupe_idGroupe_sequence START WITH 1;
+CREATE OR REPLACE TRIGGER Groupe_idGroupe_sequence
+    BEFORE INSERT ON Groupe
+    FOR EACH ROW
+    BEGIN
+        SELECT Groupe_idGroupe_sequence.nextval
+        INTO :new.idGroupe
+        FROMdual;
+        END;
 -----------------------------------------------------------------------------------------------------------------------
 --                                      Table Status
 -----------------------------------------------------------------------------------------------------------------------
