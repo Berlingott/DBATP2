@@ -127,7 +127,7 @@ CREATE OR REPLACE TRIGGER Departement_trigger_autoincrement
         FROMdual;
         END;
 -----------------------------------------------------------------------------------------------------------------------
---                                      Table DonneesProfessionel
+--                                      Table DonneesProfessionel -todo le local devrait faire reference a un local avec une PK
 -----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE DonneesProfessionel(
     numTelephone            VARCHAR(255),

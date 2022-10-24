@@ -85,7 +85,7 @@ AS
    END;
 
 --********************************************************************************************
--- Enregistrement d'une nouvelle personne Enseignant--todo
+-- Enregistrement d'une nouvelle personne Enseignant --todo verifier
 --********************************************************************************************
 CREATE OR REPLACE PROCEDURE process_nouveau_enseignant(
     "p_numTelephone"            VARCHAR,
@@ -115,13 +115,27 @@ CREATE OR REPLACE PROCEDURE process_nouveau_enseignant(
             );
         INSERT INTO Enseignant(
             numTelephone,
-            "p_AdresseCivique",
+            AdresseCivique,
             statut
         )
-        VALUES
-            
-    end;
-
+        VALUES (
+                "p_numTelephone",
+                "p_AdresseCivique",
+                "p_statut"
+               );
+        INSERT INTO Departement(
+                numTelephone,
+                telephoneProfessionel,
+                localBureau,
+                courriel
+                    )
+        VALUES (
+                "p_numTelephone",
+                "p_telephoneProfessionel",
+                "p_localBureau",
+                "p_courriel"
+               );
+    END;
 --********************************************************************************************
 -- Ajout Departement AVEC ou SANS sans directeur--todo
 --********************************************************************************************
