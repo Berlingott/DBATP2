@@ -2,12 +2,39 @@
 -- Simon Duchesne
 -- 24 Oct. 2022
 -- Fichier de creation d'ecapsulation d'operation régulières
+--REF exemple https://www.c-sharpcorner.com/UploadFile/rohatash/select-insert-update-delete-using-stored-procedure-in-sql/
 --********************************************************************************************
+ALTER SESSION SET CURRENT_SCHEMA="SIMONDUCHESNE1";
 
 --********************************************************************************************
--- Enregistrement d'une nouvelle personne étudiante
+-- Enregistrement d'une  Personne sans role --todo
 --********************************************************************************************
-CREATE OR REPLACE  PROCEDURE process_nouveau_etudiant (
+CREATE OR REPLACE PROCEDURE process_nouveau_personne(
+            "p_numTelephone" varchar,
+            "p_Nom" varchar,
+            "p_Prenom" varchar,
+            "p_numAdressSocial" varchar
+            )
+    AS
+    BEGIN
+        INSERT INTO PERSONNE(
+            numTelephone,
+            Nom,
+            Prenom  ,
+            numAdressSocial
+            )
+        VALUES(
+            "p_numTelephone",
+            "p_Nom",
+            "p_Prenom",
+            "p_numAdressSocial"
+            );
+    END;
+/
+--********************************************************************************************
+-- Enregistrement d'une nouvelle personne étudiante--todo
+--********************************************************************************************
+CREATE PROCEDURE process_nouveau_etudiant (
     PnumTelephone        varchar(30)    ,
     PNom                 varchar(255)   ,
     PPrenom              varchar(255)   ,
@@ -18,7 +45,7 @@ CREATE OR REPLACE  PROCEDURE process_nouveau_etudiant (
     PCourrielUqac        VARCHAR(255)   ,
     Petat                CHAR
 )
-    AS
+AS
    BEGIN
       INSERT INTO Personne
           ( numTelephone,
@@ -51,40 +78,40 @@ CREATE OR REPLACE  PROCEDURE process_nouveau_etudiant (
    END;
 /
 --********************************************************************************************
--- Enregistrement d'une nouvelle personne Enseignant
+-- Enregistrement d'une nouvelle personne Enseignant--todo
 --********************************************************************************************
 --********************************************************************************************
--- Ajout Departement sans directeur
+-- Ajout Departement sans directeur--todo
 --********************************************************************************************
 --********************************************************************************************
--- Ajout Departement avec directeur
+-- Ajout Departement avec directeur--todo
 --********************************************************************************************
 --********************************************************************************************
--- Ajout d'un cours
+-- Ajout d'un cours--todo
 --********************************************************************************************
 --********************************************************************************************
--- Ajout de préalable à un cours
+-- Ajout de préalable à un cours--todo
 --********************************************************************************************
 --********************************************************************************************
--- Ajout de préalable à un cours
---********************************************************************************************
-
-
-
---********************************************************************************************
--- View enseignant par ancienneté
+-- Ajout de préalable à un cours--todo
 --********************************************************************************************
 
+
+
 --********************************************************************************************
--- View voir tout sur un departement (tout ce qui est relié au département)
+-- View enseignant par ancienneté --todo
 --********************************************************************************************
 
 --********************************************************************************************
--- View Tous les cours d'un étudiant
+-- View voir tout sur un departement (tout ce qui est relié au département)--todo
 --********************************************************************************************
 
 --********************************************************************************************
--- View Liste de cours donnés dans la session
+-- View Tous les cours d'un étudiant--todo
+--********************************************************************************************
+
+--********************************************************************************************
+-- View Liste de cours donnés dans la session--todo
 --********************************************************************************************
 
 --********************************************************************************************
