@@ -56,7 +56,7 @@ CREATE TABLE Personne(
     Nom                 varchar(255)    NOT NULL,
     Prenom              varchar(255)    NOT NULL,
     numAdressSocial     varchar(255)    NOT NULL,
-    DateDeNaisssance    date            NOT NULL
+    DateDeNaisssance    DATE            DEFAULT CURRENT_TIMESTAMP
 );
 ALTER TABLE Personne
     ADD CONSTRAINT PK_numTelephone
@@ -68,8 +68,8 @@ CREATE TABLE Etudiant(
     numTelephone        VARCHAR(30)     NOT NULL,
     CodePermanent       VARCHAR(255)    NOT NULL,
     AdresseCivique      VARCHAR(255)    NOT NULL,
-    Courriel            VARCHAR(255)    NOT NULL,
-    CourrielUqac        VARCHAR(255)    NOT NULL,
+    Courriel            VARCHAR(255)    NOT NULL    UNIQUE,
+    CourrielUqac        VARCHAR(255)    NOT NULL    UNIQUE,
     etat                CHAR            NOT NULL
 );
 ALTER TABLE Etudiant
@@ -133,7 +133,7 @@ CREATE TABLE DonneesProfessionel(
     numTelephone            VARCHAR(255),
     telephoneProfessionel   INTEGER         NOT NULL,
     localBureau             INTEGER         NOT NULL,
-    courriel                VARCHAR(255)    NOT NULL
+    courriel                VARCHAR(255)    NOT NULL    UNIQUE
 );
 ALTER TABLE DonneesProfessionel
     ADD CONSTRAINT FK_DonneesProfessionel_Enseignant
