@@ -137,11 +137,45 @@ CREATE OR REPLACE PROCEDURE process_nouveau_enseignant(
                );
     END;
 --********************************************************************************************
--- Ajout Departement AVEC ou SANS sans directeur--todo
+-- Ajout Departement AVEC ou SANS sans directeur--todo verifier 
 --********************************************************************************************
---********************************************************************************************
--- Ajout Departement avec directeur--todo
---********************************************************************************************
+
+CREATE OR REPLACE PROCEDURE process_nouceau_departement(
+    "p_nom",
+    "p_numDepartement",
+    "p_numTelDuDirecteur",
+    "p_withorwithoutprincipal"
+)
+AS
+    IF "p_withorwithoutprincipal" = 'with'
+        BEGIN
+            INSERT Departement(
+                    "nom",
+                    "numDepartement",
+                    "numTelDuDirecteur",
+                    "withorwithoutprincipal"
+            )
+            VALUES(
+                    "p_nom",
+                    "p_numDepartement",
+                    "p_numTelDuDirecteur",
+                    "p_withorwithoutprincipal"
+                );
+        end;
+    IF "p_withorwithoutprincipal" = 'without'
+        BEGIN
+            INSERT Departement(
+                    "nom",
+                    "numDepartement",
+                    "withorwithoutprincipal"
+            )
+            VALUES(
+                    "p_nom",
+                    "p_numDepartement",
+                    "p_withorwithoutprincipal"
+                );
+        end;
+
 --********************************************************************************************
 -- Ajout d'un cours--todo
 --********************************************************************************************
@@ -171,7 +205,7 @@ CREATE OR REPLACE PROCEDURE process_nouveau_enseignant(
 --********************************************************************************************
 
 --********************************************************************************************
--- Note d'un etudiant
+-- Note d'un etudiant -- todo
 --********************************************************************************************
 
 
