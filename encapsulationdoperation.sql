@@ -7,7 +7,14 @@
 ALTER SESSION SET CURRENT_SCHEMA="SIMONDUCHESNE1";
 
 --********************************************************************************************
--- Enregistrement d'une  Personne sans role --todo
+--                                                  Légende
+-- Dans ce fichier, toutes les variables commençant paqr "p_" sont des variables créé pour la manipulation
+-- dans les procédures.
+--********************************************************************************************
+
+
+--********************************************************************************************
+-- Enregistrement d'une  Personne sans role
 --********************************************************************************************
 CREATE OR REPLACE PROCEDURE process_nouveau_personne(
             "p_numTelephone" varchar,
@@ -30,53 +37,53 @@ CREATE OR REPLACE PROCEDURE process_nouveau_personne(
             "p_numAdressSocial"
             );
     END;
-/
+
 --********************************************************************************************
--- Enregistrement d'une nouvelle personne étudiante--todo
+-- Enregistrement d'une nouvelle personne étudiante
 --********************************************************************************************
-CREATE PROCEDURE process_nouveau_etudiant (
-    PnumTelephone        varchar(30)    ,
-    PNom                 varchar(255)   ,
-    PPrenom              varchar(255)   ,
-    PnumAdressSocial     varchar(255)   ,
-    PCodePermanent       VARCHAR(255)   ,
-    PAdresseCivique      VARCHAR(255)   ,
-    PCourriel            VARCHAR(255)   ,
-    PCourrielUqac        VARCHAR(255)   ,
-    Petat                CHAR
+CREATE OR REPLACE PROCEDURE process_nouveau_etudiant (
+    "p_numTelephone"        varchar  ,
+    "p_Nom"                 varchar ,
+    "p_Prenom"              varchar  ,
+    "p_numAdressSocial"     varchar   ,
+    "p_CodePermanent"       VARCHAR  ,
+    "p_AdresseCivique"      VARCHAR   ,
+    "p_Courriel"            VARCHAR   ,
+    "p_CourrielUqac"        VARCHAR  ,
+    "p_etat"                CHAR
 )
 AS
    BEGIN
-      INSERT INTO Personne
-          ( numTelephone,
+      INSERT INTO Personne(
+            numTelephone,
             Nom,
             Prenom  ,
             numAdressSocial
             )
-       VALUES
-        (PnumTelephone,
-        PNom   ,
-        PPrenom  ,
-        PnumAdressSocial
+       VALUES(
+            "p_numTelephone" ,
+            "p_Nom",
+            "p_Prenom",
+            "p_numAdressSocial"
         );
-      INSERT INTO Etudiant
-          (
+      INSERT INTO Etudiant(
             numTelephone,
             CodePermanent ,
             AdresseCivique   ,
             Courriel     ,
             CourrielUqac  ,
             etat
-    )
-       VALUES
-        (PnumTelephone,
-        PCodePermanent ,
-        PAdresseCivique,
-        PCourriel,
-        PCourrielUqac,
-        Petat);
+            )
+       VALUES(
+            "p_numTelephone",
+            "p_CodePermanent",
+            "p_AdresseCivique",
+            "p_Courriel",
+            "p_CourrielUqac" ,
+            "p_etat"
+            );
    END;
-/
+
 --********************************************************************************************
 -- Enregistrement d'une nouvelle personne Enseignant--todo
 --********************************************************************************************
