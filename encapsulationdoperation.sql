@@ -87,8 +87,43 @@ AS
 --********************************************************************************************
 -- Enregistrement d'une nouvelle personne Enseignant--todo
 --********************************************************************************************
+CREATE OR REPLACE PROCEDURE process_nouveau_enseignant(
+    "p_numTelephone"            VARCHAR,
+    "p_CodePermanent"           VARCHAR,
+    "p_AdresseCivique"          VARCHAR,
+    "p_Courriel"                VARCHAR,
+    "p_CourrielUqac"            VARCHAR,
+    "p_etat"                    CHAR,
+    "p_AdresseCivique"          VARCHAR,
+    "p_statut"                  CHAR,
+    "p_telephoneProfessionel"   INTEGER,
+    "p_localBureau"             INTEGER,
+    "p_courriel"                VARCHAR
+) AS
+    BEGIN
+        INSERT INTO Perssonne(
+            p_numTelephone,
+            Nom,
+            Prenom,
+            numAdressSocial
+        )
+        VALUES (
+                "p_numTelephone",
+                "p_nom",
+                "p_prenom",
+                "p_numAddressSocial"
+            );
+        INSERT INTO Enseignant(
+            numTelephone,
+            "p_AdresseCivique",
+            statut
+        )
+        VALUES
+            
+    end;
+
 --********************************************************************************************
--- Ajout Departement sans directeur--todo
+-- Ajout Departement AVEC ou SANS sans directeur--todo
 --********************************************************************************************
 --********************************************************************************************
 -- Ajout Departement avec directeur--todo
