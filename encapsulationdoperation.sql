@@ -137,7 +137,7 @@ CREATE OR REPLACE PROCEDURE process_nouveau_enseignant(
                );
     END;
 --********************************************************************************************
--- Ajout Departement AVEC ou SANS sans directeur--todo verifier 
+-- Ajout Departement AVEC ou SANS sans directeur--todo verifier
 --********************************************************************************************
 
 CREATE OR REPLACE PROCEDURE process_nouceau_departement(
@@ -174,14 +174,49 @@ AS
                     "p_numDepartement",
                     "p_withorwithoutprincipal"
                 );
-        end;
+        END;
 
 --********************************************************************************************
 -- Ajout d'un cours--todo
 --********************************************************************************************
+CREATE OR REPLACE PROCEDURE process_nouveau_cours(
+    "sigleDuCours"          VARCHAR,
+    "titreCours"            VARCHAR,
+    "enseignantResponsable" VARCHAR,
+    "nombreCredit"          VARCHAR,
+    "heureTotalCours"       VARCHAR,
+    "heureLab"              VARCHAR,
+    "heurePerso"            VARCHAR,
+    "sessionDuCours"        VARCHAR
+)AS
+    BEGIN
+        INSERT INTO Cours(
+    sigleDuCours,
+    titreCours   ,
+    enseignantResponsable,
+    nombreCredit          ,
+    heureTotalCours        ,
+    heureLab                ,
+    heurePerso               ,
+    sessionDuCours
+    )
+    VALUES (
+    "sigleDuCours"          ,
+    "titreCours"            ,
+    "enseignantResponsable" ,
+    "nombreCredit"          ,
+    "heureTotalCours"       ,
+    "heureLab"              ,
+    "heurePerso"            ,
+    "sessionDuCours"
+    );
+    end;
+
 --********************************************************************************************
 -- Ajout de préalable à un cours--todo
 --********************************************************************************************
+
+
 --********************************************************************************************
 -- Ajout de préalable à un cours--todo
 --********************************************************************************************
