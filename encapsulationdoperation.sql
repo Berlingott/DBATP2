@@ -85,14 +85,136 @@ AS
    END;
 
 --********************************************************************************************
--- Enregistrement d'une nouvelle personne Enseignant--todo
+-- Enregistrement d'une nouvelle personne Enseignant
 --********************************************************************************************
+CREATE OR REPLACE PROCEDURE process_nouveau_enseignant(
+    "p_numTelephone"            VARCHAR,
+    "p_prenom"                  VARCHAR,
+    "p_nom"                  VARCHAR,
+    "p_numAddressSocial"        VARCHAR,
+    "p_CodePermanent"           VARCHAR,
+    "p_AdresseCivique"          VARCHAR,
+    "p_Courriel"                VARCHAR,
+    "p_CourrielUqac"            VARCHAR,
+    "p_etat"                    CHAR,
+    "p_AdresseCivique"          VARCHAR,
+    "p_statut"                  CHAR,
+    "p_telephoneProfessionel"   INTEGER,
+    "p_localBureau"             INTEGER,
+    "p_courriel"                VARCHAR
+) AS
+    BEGIN
+        INSERT INTO Personne(
+            numTelephone,
+            Nom,
+            Prenom,
+            numAdressSocial
+        )
+        VALUES (
+                "p_numTelephone",
+                "p_nom",
+                "p_prenom",
+                "p_numAddressSocial"
+            );
+        INSERT INTO Enseignant(
+            numTelephone,
+            AdresseCivique,
+            statut
+        )
+        VALUES (
+                "p_numTelephone",
+                "p_AdresseCivique",
+                "p_statut"
+               );
+        INSERT INTO DonneesProfessionel(
+                numTelephone,
+                telephoneProfessionel,
+                localBureau,
+                courriel
+                    )
+        VALUES (
+                "p_numTelephone",
+                "p_telephoneProfessionel",
+                "p_localBureau",
+                "p_courriel"
+               );
+    END;
 --********************************************************************************************
--- Ajout Departement sans directeur--todo
+-- Ajout Departement AVEC ou SANS sans directeur--todo verifier
 --********************************************************************************************
+
+CREATE OR REPLACE PROCEDURE process_nouceau_departement(
+    "p_nom",
+    "p_numDepartement",
+    "p_numTelDuDirecteur",
+    "p_withorwithoutprincipal"
+)
+AS
+    IF "p_withorwithoutprincipal" = 'with'
+        BEGIN
+            INSERT Departement(
+                    "nom",
+                    "numDepartement",
+                    "numTelDuDirecteur",
+                    "withorwithoutprincipal"
+            )
+            VALUES(
+                    "p_nom",
+                    "p_numDepartement",
+                    "p_numTelDuDirecteur",
+                    "p_withorwithoutprincipal"
+                );
+        end;
+    IF "p_withorwithoutprincipal" = 'without'
+        BEGIN
+            INSERT Departement(
+                    "nom",
+                    "numDepartement",
+                    "withorwithoutprincipal"
+            )
+            VALUES(
+                    "p_nom",
+                    "p_numDepartement",
+                    "p_withorwithoutprincipal"
+                );
+        END;
+
 --********************************************************************************************
--- Ajout Departement avec directeur--todo
+-- Ajout d'un cours--todo
 --********************************************************************************************
+CREATE OR REPLACE PROCEDURE process_nouveau_cours(
+    "sigleDuCours"          VARCHAR,
+    "titreCours"            VARCHAR,
+    "enseignantResponsable" VARCHAR,
+    "nombreCredit"          VARCHAR,
+    "heureTotalCours"       VARCHAR,
+    "heureLab"              VARCHAR,
+    "heurePerso"            VARCHAR,
+    "sessionDuCours"        VARCHAR
+)AS
+    BEGIN
+        INSERT INTO Cours(
+    sigleDuCours,
+    titreCours   ,
+    enseignantResponsable,
+    nombreCredit          ,
+    heureTotalCours        ,
+    heureLab                ,
+    heurePerso               ,
+    sessionDuCours
+    )
+    VALUES (
+    "sigleDuCours"          ,
+    "titreCours"            ,
+    "enseignantResponsable" ,
+    "nombreCredit"          ,
+    "heureTotalCours"       ,
+    "heureLab"              ,
+    "heurePerso"            ,
+    "sessionDuCours"
+    );
+    end;
+
 --********************************************************************************************
 -- Ajout d'un cours--todo
 --********************************************************************************************
