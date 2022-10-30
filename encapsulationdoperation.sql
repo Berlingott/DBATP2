@@ -234,9 +234,14 @@ CREATE OR REPLACE PROCEDURE process_nouveau_préalable(
     END;
 
 --********************************************************************************************
--- View enseignant par ancienneté --todo
+-- View enseignant par ancienneté
 --********************************************************************************************
-
+CREATE VIEW view_Enseignant_par_anciennete
+    AS
+    SELECT Enseignant.numTelephone, Personne.NUMTELEPHONE, Personne.nom, Personne.prenom, ENSEIGNANT.DATEEMBAUCHE
+    FROM ENSEIGNANT
+    INNER JOIN PERSONNE  on ENSEIGNANT.NUMTELEPHONE = Personne.NUMTELEPHONE
+    ORDER BY ENSEIGNANT.DATEEMBAUCHE;
 --********************************************************************************************
 -- View voir tout sur un departement (tout ce qui est relié au département)--todo
 --********************************************************************************************
