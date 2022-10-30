@@ -140,7 +140,7 @@ CREATE OR REPLACE PROCEDURE process_nouveau_enseignant(
                );
     END;
 --********************************************************************************************
--- Ajout Departement AVEC ou SANS sans directeur--todo verifier
+-- Ajout Departement AVEC ou SANS sans directeur --todo verif
 --********************************************************************************************
 
 CREATE OR REPLACE PROCEDURE process_nouceau_departement(
@@ -180,7 +180,7 @@ AS
         END;
 
 --********************************************************************************************
--- Ajout d'un cours--todo
+-- Ajout d'un cours
 --********************************************************************************************
 CREATE OR REPLACE PROCEDURE process_nouveau_cours(
     "sigleDuCours"          VARCHAR,
@@ -216,16 +216,22 @@ CREATE OR REPLACE PROCEDURE process_nouveau_cours(
     end;
 
 --********************************************************************************************
--- Ajout d'un cours--todo
+-- Ajout de préalable à un cours
 --********************************************************************************************
---********************************************************************************************
--- Ajout de préalable à un cours--todo
---********************************************************************************************
---********************************************************************************************
--- Ajout de préalable à un cours--todo
---********************************************************************************************
-
-
+CREATE OR REPLACE PROCEDURE process_nouveau_préalable(
+    "p_sigleDuCoursConcerner" VARCHAR,
+    "p_sigleDuCoursPrealable" VARCHAR
+) AS
+    BEGIN
+        INSERT INTO Prealable(
+            coursPrincipal,
+            coursPrealable
+        )
+        VALUES (
+            "p_sigleDuCoursConcerner" ,
+            "p_sigleDuCoursPrealable"
+               );
+    END;
 
 --********************************************************************************************
 -- View enseignant par ancienneté --todo
@@ -244,7 +250,7 @@ CREATE OR REPLACE PROCEDURE process_nouveau_cours(
 --********************************************************************************************
 
 --********************************************************************************************
--- Note d'un etudiant
+-- VIEW Note d'un etudiant
 --********************************************************************************************
 
 
