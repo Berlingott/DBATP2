@@ -30,5 +30,11 @@ GRANT UPDATE ANY TABLE to simonduchesne1;
 --********************************************************************************************
 alter session set "_oracle_script"=true;
 CREATE USER lectureseule IDENTIFIED BY "uqac1234";
-GRANT CREATE SESSION TO lecteur;
-GRANT READ ANY TABLE TO lecteur;
+GRANT CREATE SESSION TO lectureseule;
+GRANT READ ANY TABLE TO lectureseule;
+
+--********************************************************************************************
+--                              Connexion au schéma
+--********************************************************************************************
+
+ALTER SESSION SET CURRENT_SCHEMA="SIMONDUCHESNE1"

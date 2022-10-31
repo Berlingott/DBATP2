@@ -243,22 +243,31 @@ CREATE VIEW view_Enseignant_par_anciennete
     INNER JOIN PERSONNE  on ENSEIGNANT.NUMTELEPHONE = Personne.NUMTELEPHONE
     ORDER BY ENSEIGNANT.DATEEMBAUCHE;
 --********************************************************************************************
--- View voir tout sur un departement (tout ce qui est relié au département)--todo
+-- View voir tout sur un departement (tout ce qui est relié au département)
 --********************************************************************************************
+CREATE VIEW view_info_sur_departement
+    AS
+    SELECT Departement.iDdepartement, Departement.nom, Departement.numTelDuDirecteur, Personne.numTelephone, Personne.Nom, Personne.Prenom
+    FROM DEPARTEMENT
+    INNER JOIN PERSONNE on DEPARTEMENT.NOM = PERSONNE.NOM;
 
 --********************************************************************************************
--- View Tous les cours d'un étudiant--todo
+-- View Tous les cours d'un étudiant
 --********************************************************************************************
-
---********************************************************************************************
--- View Liste de cours donnés dans la session--todo
---********************************************************************************************
+CREATE VIEW view_cours_dun_etudiant
+    AS
+    SELECT Personne.nom, Personne.prenom, Personne.numTelephone, Status.cote, Status.NUMTELEPHONE, GROUPE.sigleCours
+    FROM Personne
+    INNER JOIN Status ON Status.NUMTELEPHONE = Personne.NUMTELEPHONE
+    INNER JOIN GROUPE ON STATUS.IDGROUPE = GROUPE.IDGROUPE
+    WHERE Status.cote = 'X';
 
 --********************************************************************************************
 -- VIEW Note d'un etudiant
 --********************************************************************************************
-
-
-
-
-
+CREATE VIEW view_cours_dun_etudiant
+    AS
+    SELECT Personne.nom, Personne.prenom, Personne.numTelephone, Status.cote, Status.NUMTELEPHONE, GROUPE.sigleCours
+    FROM Personne
+    INNER JOIN Status ON Status.NUMTELEPHONE = Personne.NUMTELEPHONE
+    INNER JOIN GROUPE ON STATUS.IDGROUPE = GROUPE.IDGROUPE;

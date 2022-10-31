@@ -251,7 +251,8 @@ CREATE TABLE PlageHoraire(
     idGroupe        INTEGER, -- reference Groupe
     numero          INTEGER, --reference Local
     aile            CHAR(1), --reference Local
-    etage           INTEGER--reference Local
+    etage           INTEGER,--reference Local
+    sigleCours      VARCHAR(255)
 );
 ALTER TABLE PlageHoraire
     ADD CONSTRAINT PlageHoraire_typeDeCours_check

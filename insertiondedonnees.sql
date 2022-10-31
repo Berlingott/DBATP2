@@ -3,22 +3,6 @@
 -- 24 Oct. 2022
 -- Fichier d'insertion de données exemples dans la base de données.
 --*******************************************************************************************
-ALTER SESSION SET CURRENT_SCHEMA="SIMONDUCHESNE1"
---*******************************************
--- DEBUG COMMAND ZONE
-select
-   comp_id,
-   comp_name,
-   version,
-   status,
-   namespace,
-   schema
-from
-   dba_registry;
-
-
-ALTER SESSION SET CURRENT_SCHEMA="SIMONDUCHESNE1";
-
 
 INSERT INTO PERSONNE(numtelephone, nom, prenom, numadresssocial)
     VALUES ('58123412348','Duchesne','Simon','3495012835');
